@@ -24,7 +24,7 @@ export default function Booking() {
     e.preventDefault();
 
     try {
-      // 🔍 Check duplicate booking (same vehicle + same date)
+      // 🔍 Check duplicate booking (same vehicle + date)
       const q = query(
         collection(db, "bookings"),
         where("vehicle", "==", vehicle),
@@ -94,17 +94,18 @@ export default function Booking() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto mt-10 bg-white shadow-lg rounded-xl p-8">
-      <h1 className="text-4xl font-bold text-center text-blue-700 mb-8">
+    <div className="max-w-2xl mx-auto mt-6 sm:mt-10 bg-white shadow-lg rounded-xl p-4 sm:p-8">
+      
+      <h1 className="text-2xl sm:text-4xl font-bold text-center text-blue-700 mb-6 sm:mb-8">
         🚖 Book Your Trip
       </h1>
 
-      <form onSubmit={handleSubmit} className="space-y-5">
+      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
 
         <input
           type="text"
           placeholder="Full Name"
-          className="w-full border rounded-lg p-3"
+          className="w-full border border-gray-300 rounded-lg p-3 text-base sm:text-lg"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
@@ -113,14 +114,15 @@ export default function Booking() {
         <input
           type="tel"
           placeholder="Phone Number"
-          className="w-full border rounded-lg p-3"
+          className="w-full border border-gray-300 rounded-lg p-3 text-base sm:text-lg"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
           required
         />
 
+        {/* 🚗 Vehicle Dropdown (Swift Dzire removed) */}
         <select
-          className="w-full border rounded-lg p-3"
+          className="w-full border border-gray-300 rounded-lg p-3 text-base sm:text-lg"
           value={vehicle}
           onChange={(e) => setVehicle(e.target.value)}
           required
@@ -129,12 +131,11 @@ export default function Booking() {
           <option>Toyota Etios</option>
           <option>Maruti Suzuki Ertiga</option>
           <option>Innova Crysta</option>
-          <option>Swift Dzire</option>
           <option>Tempo Traveller</option>
         </select>
 
         <select
-          className="w-full border rounded-lg p-3"
+          className="w-full border border-gray-300 rounded-lg p-3 text-base sm:text-lg"
           value={service}
           onChange={(e) => setService(e.target.value)}
           required
@@ -152,7 +153,7 @@ export default function Booking() {
         <input
           type="text"
           placeholder="Pickup Location"
-          className="w-full border rounded-lg p-3"
+          className="w-full border border-gray-300 rounded-lg p-3 text-base sm:text-lg"
           value={starting}
           onChange={(e) => setStarting(e.target.value)}
           required
@@ -161,7 +162,7 @@ export default function Booking() {
         <input
           type="text"
           placeholder="Destination"
-          className="w-full border rounded-lg p-3"
+          className="w-full border border-gray-300 rounded-lg p-3 text-base sm:text-lg"
           value={destination}
           onChange={(e) => setDestination(e.target.value)}
           required
@@ -169,7 +170,7 @@ export default function Booking() {
 
         <input
           type="date"
-          className="w-full border rounded-lg p-3"
+          className="w-full border border-gray-300 rounded-lg p-3 text-base sm:text-lg"
           value={date}
           onChange={(e) => setDate(e.target.value)}
           required
@@ -177,7 +178,7 @@ export default function Booking() {
 
         <input
           type="time"
-          className="w-full border rounded-lg p-3"
+          className="w-full border border-gray-300 rounded-lg p-3 text-base sm:text-lg"
           value={time}
           onChange={(e) => setTime(e.target.value)}
           required
@@ -186,14 +187,14 @@ export default function Booking() {
         <textarea
           rows="4"
           placeholder="Additional Message (Optional)"
-          className="w-full border rounded-lg p-3"
+          className="w-full border border-gray-300 rounded-lg p-3 text-base sm:text-lg"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         />
 
         <button
           type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg text-lg font-semibold"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg text-lg font-semibold active:scale-95 transition"
         >
           Submit Booking
         </button>
