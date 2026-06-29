@@ -52,7 +52,7 @@ export default function Booking() {
       `;
 
       // Replace this number with your own WhatsApp number
-      const whatsappURL = `https://wa.me/918309455091?text=${encodeURIComponent(
+      const whatsappURL = `https://wa.me/919494392064?text=${encodeURIComponent(
         whatsappMessage
       )}`;
 
