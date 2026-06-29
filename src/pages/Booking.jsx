@@ -3,6 +3,9 @@ import { db } from "../firebase";
 import {
   collection,
   addDoc,
+  getDocs,
+  query,
+  where,
   serverTimestamp,
 } from "firebase/firestore";
 
@@ -21,7 +24,21 @@ export default function Booking() {
     e.preventDefault();
 
     try {
-      // Save booking to Firebase
+      // 🔍 Check duplicate booking (same vehicle + same date)
+      const q = query(
+        collection(db, "bookings"),
+        where("vehicle", "==", vehicle),
+        where("date", "==", date)
+      );
+
+      const snapshot = await getDocs(q);
+
+      if (!snapshot.empty) {
+        alert("⚠️ This vehicle is already booked for this date!");
+        return;
+      }
+
+      // 💾 Save booking to Firebase
       await addDoc(collection(db, "bookings"), {
         name,
         phone,
@@ -36,7 +53,7 @@ export default function Booking() {
         createdAt: serverTimestamp(),
       });
 
-      // WhatsApp Message
+      // 📲 WhatsApp message
       const whatsappMessage = `
 🚖 *MRM Travels Booking*
 
@@ -51,17 +68,15 @@ export default function Booking() {
 📝 Message: ${message}
       `;
 
-      // Replace this number with your own WhatsApp number
       const whatsappURL = `https://wa.me/919550541694?text=${encodeURIComponent(
         whatsappMessage
       )}`;
 
-      // Open WhatsApp
       window.open(whatsappURL, "_blank");
 
-      alert("Booking Submitted Successfully!");
+      alert("✅ Booking Submitted Successfully!");
 
-      // Clear form
+      // 🧹 Reset form
       setName("");
       setPhone("");
       setVehicle("");
@@ -71,6 +86,7 @@ export default function Booking() {
       setDate("");
       setTime("");
       setMessage("");
+
     } catch (error) {
       console.error(error);
       alert(error.message);
@@ -79,7 +95,6 @@ export default function Booking() {
 
   return (
     <div className="max-w-2xl mx-auto mt-10 bg-white shadow-lg rounded-xl p-8">
-
       <h1 className="text-4xl font-bold text-center text-blue-700 mb-8">
         🚖 Book Your Trip
       </h1>
